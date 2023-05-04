@@ -3,13 +3,38 @@
 version = 3
 
 [[package]]
+name = "cozy-chess"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0aa2dcdbe66b10019af0f81ee4f404ca12c1d24e56f47e7f2588954f8bfa306"
+dependencies = [
+ "cozy-chess-types",
+]
+
+[[package]]
+name = "cozy-chess-types"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f4a557c6659b8705d301732f473c9a61659c740ffda3e3485e79d1d4b7a1e12"
+
+[[package]]
 name = "engine"
 version = "0.1.0"
+dependencies = [
+ "movegen",
+]
 
 [[package]]
 name = "interface"
 version = "0.1.0"
+dependencies = [
+ "engine",
+ "movegen",
+]
 
 [[package]]
 name = "movegen"
 version = "0.1.0"
+dependencies = [
+ "cozy-chess",
+]
