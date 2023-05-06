@@ -3,6 +3,9 @@ use movegen::{Color, Move, Piece};
 use Color::{Black, White};
 use Piece::{Bishop, Knight, Pawn, Queen, Rook};
 
+// PeSTO's Evaluation Function
+// https://www.chessprogramming.org/PeSTO%27s_Evaluation_Function
+
 pub fn eval(game: Game) -> i64 {
     let multiplier = match game.board.side_to_move() {
         Black => -1i64,

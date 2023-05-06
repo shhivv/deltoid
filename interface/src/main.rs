@@ -1,5 +1,5 @@
 pub mod consts;
-pub mod interface;
+pub mod uci;
 
 pub mod commands;
 
@@ -11,7 +11,7 @@ fn main() -> io::Result<()> {
     stdin().read_line(&mut input)?;
 
     match input.as_str().trim() {
-        "uci" => interface::Interface::new().start()?,
+        "uci" => uci::Interface::new().start()?,
         _ => println!("Unkown protocol"),
     };
 
