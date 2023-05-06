@@ -1,1 +1,1 @@
-pub const INFINITY: i64 = 32_001;
+pub const INFINITY: i32 = 32_001;

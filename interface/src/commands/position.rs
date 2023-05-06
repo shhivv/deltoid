@@ -6,6 +6,7 @@ use movegen::{Board, Move, MoveParseError, Piece, Square};
 // https://github.com/EngineProgramming/honse/blob/master/src/chess/parse_move.rs#LL3C1-L17C2
 
 // The UCI protocol wants castling moves to be reported as king -> 2 steps, such as e1g1, as where cozy-chess wants moves to be reported as king takes rook, such as e1h1.
+
 pub fn parse_move(board: &Board, movestr: &str) -> Result<Move, MoveParseError> {
     let mut mv: Move = movestr.parse()?;
 
@@ -33,7 +34,7 @@ pub fn run(input: &mut SplitAsciiWhitespace, game: &mut Game) {
                 .take_while(|&part| part != "moves")
                 .fold(String::new(), |a, b| a + b + " ");
 
-            game.set_position_from_fen(fen)
+            game.set_position_from_fen(&fen);
         }
         _ => {}
     };
@@ -47,5 +48,5 @@ pub fn run(input: &mut SplitAsciiWhitespace, game: &mut Game) {
         }
     }
 
-    game.make_moves(moves)
+    game.make_moves(moves);
 }

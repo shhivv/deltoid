@@ -21,6 +21,7 @@ checksum = "6f4a557c6659b8705d301732f473c9a61659c740ffda3e3485e79d1d4b7a1e12"
 name = "engine"
 version = "0.1.0"
 dependencies = [
+ "lazy_static",
  "movegen",
 ]
 
@@ -31,6 +32,12 @@ dependencies = [
  "engine",
  "movegen",
 ]
+
+[[package]]
+name = "lazy_static"
+version = "1.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "movegen"

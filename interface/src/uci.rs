@@ -1,4 +1,3 @@
-#![allow(unused)]
 // Reference: https://gist.github.com/DOBRO/2592c6dad754ba67e6dcaec8c90165bf
 
 use engine::Game;
@@ -12,7 +11,8 @@ use std::io::{self, stdin};
 pub struct Interface {}
 
 impl Interface {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {}
     }
 
@@ -24,9 +24,8 @@ impl Interface {
         loop {
             let mut raw = String::new();
             match stdin().read_line(&mut raw) {
-                Ok(0) => break,
+                Ok(0) | Err(_) => break,
                 Ok(_) => {}
-                Err(_) => break,
             }
 
             let mut input = raw.split_ascii_whitespace();
@@ -53,7 +52,7 @@ impl Interface {
         println!("uciok");
     }
 
-    fn options() {}
+    const fn options() {}
 }
 
 impl Default for Interface {

@@ -1,8 +1,12 @@
+#![warn(clippy::pedantic, clippy::nursery)]
+#![allow(clippy::missing_panics_doc, clippy::missing_errors_doc)]
+
 // I'll implement the movegen later so will be just abstracting `cozy-chess` for now
 // Reference: https://github.com/EngineProgramming/honse/blob/master/src/chess/move_gen.rs
 
 pub use cozy_chess::{Board, Color, Move, MoveParseError, Piece, Rank, Square};
 
+#[must_use]
 pub fn get_all_moves(board: &Board) -> Vec<Move> {
     let mut move_list = vec![];
     board.generate_moves(|moves| {
@@ -12,6 +16,7 @@ pub fn get_all_moves(board: &Board) -> Vec<Move> {
     move_list
 }
 
+#[must_use]
 pub fn get_all_captures(board: &Board) -> Vec<Move> {
     let mut captures = vec![];
 
