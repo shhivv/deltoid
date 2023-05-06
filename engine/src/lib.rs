@@ -3,3 +3,4 @@
 pub mod game;
 pub mod search;
 pub use game::Game;
+pub mod defs;

@@ -1,5 +1,8 @@
+use crate::defs::INFINITY;
+use crate::search::root::root;
 use movegen::{get_all_captures, get_all_moves, Board, Move};
 
+#[derive(Clone)]
 pub struct Game {
     pub board: Board,
 }
@@ -13,8 +16,9 @@ impl Game {
 
     pub fn search(&self) -> Move {
         let moves = get_all_moves(&self.board);
-        let best_move: Option<Move> = None;
-        moves[0]
+        let eval = root(7, self.clone(), -INFINITY, INFINITY);
+
+        eval.1.unwrap()
     }
 
     pub fn reset_position(&mut self) {
@@ -29,6 +33,10 @@ impl Game {
         for mv in moves {
             self.board.play(mv)
         }
+    }
+
+    pub fn get_all_moves(&self) -> Vec<Move> {
+        get_all_moves(&self.board)
     }
 }
 
