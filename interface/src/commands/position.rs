@@ -1,27 +1,9 @@
 use std::str::SplitAsciiWhitespace;
 
 use engine::Game;
-use movegen::{Board, Move, MoveParseError, Piece, Square};
+use movegen::parse_move;
 
 // https://github.com/EngineProgramming/honse/blob/master/src/chess/parse_move.rs#LL3C1-L17C2
-
-// The UCI protocol wants castling moves to be reported as king -> 2 steps, such as e1g1, as where cozy-chess wants moves to be reported as king takes rook, such as e1h1.
-
-pub fn parse_move(board: &Board, movestr: &str) -> Result<Move, MoveParseError> {
-    let mut mv: Move = movestr.parse()?;
-
-    if board.piece_on(mv.from) == Some(Piece::King) && board.piece_on(mv.to) != Some(Piece::Rook) {
-        mv.to = match (mv.from, mv.to) {
-            (Square::E1, Square::G1) => Square::H1,
-            (Square::E8, Square::G8) => Square::H8,
-            (Square::E1, Square::C1) => Square::A1,
-            (Square::E8, Square::C8) => Square::A8,
-            _ => mv.to,
-        };
-    }
-
-    Ok(mv)
-}
 
 pub fn run(input: &mut SplitAsciiWhitespace, game: &mut Game) {
     match input.next() {

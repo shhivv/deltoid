@@ -52,3 +52,34 @@ pub fn get_all_captures(board: &Board) -> Vec<Move> {
 
     captures
 }
+
+pub fn parse_move(board: &Board, movestr: &str) -> Result<Move, MoveParseError> {
+    let mut mv: Move = movestr.parse()?;
+
+    if board.piece_on(mv.from) == Some(Piece::King) && board.piece_on(mv.to) != Some(Piece::Rook) {
+        mv.to = match (mv.from, mv.to) {
+            (Square::E1, Square::G1) => Square::H1,
+            (Square::E8, Square::G8) => Square::H8,
+            (Square::E1, Square::C1) => Square::A1,
+            (Square::E8, Square::C8) => Square::A8,
+            _ => mv.to,
+        };
+    }
+
+    Ok(mv)
+}
+
+#[must_use]
+pub fn move_to_string(board: &Board, mv: Move) -> String {
+    if board.piece_on(mv.from) == Some(Piece::King) {
+        return match (mv.from, mv.to) {
+            (Square::E1, Square::H1) => String::from("e1g1"),
+            (Square::E8, Square::H8) => String::from("e8g8"),
+            (Square::E1, Square::A1) => String::from("e1c1"),
+            (Square::E8, Square::A8) => String::from("e8c8"),
+            _ => mv.to_string(),
+        };
+    }
+
+    mv.to_string()
+}

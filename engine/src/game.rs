@@ -1,4 +1,5 @@
 use crate::defs::INFINITY;
+use crate::pv::PVTable;
 use crate::search::root::root;
 use movegen::{get_all_moves, Board, Move};
 
@@ -17,8 +18,27 @@ impl Game {
 
     #[must_use]
     pub fn search(&self) -> Move {
-        let eval = root(7, self.clone(), -INFINITY, INFINITY);
-        eval.1.unwrap()
+        let mut pv_table = PVTable::new();
+        let mut nodes = 0u128;
+
+        for depth in 1..7 {
+            let score = root(
+                depth,
+                0,
+                self.clone(),
+                -INFINITY,
+                INFINITY,
+                &mut pv_table,
+                &mut nodes,
+            );
+
+            println!(
+                "info depth {depth} score cp {score} nodes {nodes} pv {}",
+                pv_table.display_line(&self.board)
+            );
+        }
+
+        pv_table.moves[0][0].unwrap()
     }
 
     pub fn reset_position(&mut self) {

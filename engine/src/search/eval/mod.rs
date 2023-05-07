@@ -2,6 +2,7 @@ pub mod pst;
 
 use crate::Game;
 use lazy_static::lazy_static;
+use movegen::Color;
 
 use pst::PieceSquareTable;
 
@@ -39,5 +40,11 @@ pub fn eval(game: Game) -> i32 {
     let mg_phase = game_phase.min(24);
     let eg_phase = 24 - mg_phase;
 
-    (mg * mg_phase + eg * eg_phase) / 24
+    let score = (mg * mg_phase + eg * eg_phase) / 24;
+
+    //negamax
+    match board.side_to_move() {
+        Color::White => score,
+        Color::Black => -score,
+    }
 }
