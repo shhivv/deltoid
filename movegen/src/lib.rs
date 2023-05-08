@@ -4,7 +4,7 @@
 // I'll implement the movegen later so will be just abstracting `cozy-chess` for now
 // Reference: https://github.com/EngineProgramming/honse/blob/master/src/chess/move_gen.rs
 
-pub use cozy_chess::{Board, Color, Move, MoveParseError, Piece, Rank, Square};
+pub use cozy_chess::{Board, Color, GameStatus, Move, MoveParseError, Piece, Rank, Square};
 
 #[must_use]
 pub fn get_all_moves(board: &Board) -> Vec<Move> {

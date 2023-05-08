@@ -39,10 +39,8 @@ impl PVTable {
     pub fn display_line(&self, board: &Board) -> String {
         let mut line = String::new();
 
-        for mv in self.moves[0] {
-            if let Some(exists) = mv{
-                line.push_str(&format!("{} ", move_to_string(board, exists)));
-            }
+        for mv in self.moves[0].into_iter().flatten() {
+            line.push_str(&format!("{} ", move_to_string(board, mv)));
         }
         line
     }

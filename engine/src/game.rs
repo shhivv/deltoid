@@ -1,11 +1,13 @@
-use crate::defs::INFINITY;
 use crate::pv::PVTable;
 use crate::search::root::root;
+use crate::{defs::INFINITY, search::info::SearchInfo};
 use movegen::{get_all_moves, Board, Move};
 
 #[derive(Clone)]
 pub struct Game {
     pub board: Board,
+    pub info: SearchInfo,
+    pub pv: PVTable,
 }
 
 impl Game {
@@ -13,32 +15,37 @@ impl Game {
     pub fn new() -> Self {
         Self {
             board: Board::startpos(),
+            info: SearchInfo::new(),
+            pv: PVTable::new(),
         }
     }
 
     #[must_use]
-    pub fn search(&self) -> Move {
-        let mut pv_table = PVTable::new();
-        let mut nodes = 0u128;
+    pub fn search(&mut self) -> Move {
+        let mut best_move: Option<Move> = None;
 
-        for depth in 1..7 {
+        let depth = 7;
+
+        for depth in 1..=depth {
             let score = root(
                 depth,
                 0,
-                self.clone(),
+                &self.board,
                 -INFINITY,
                 INFINITY,
-                &mut pv_table,
-                &mut nodes,
+                &mut self.pv,
+                &mut self.info,
             );
 
             println!(
-                "info depth {depth} score cp {score} nodes {nodes} pv {}",
-                pv_table.display_line(&self.board)
+                "info depth {depth} score cp {score} nodes {} pv {}",
+                self.info.nodes,
+                self.pv.display_line(&self.board)
             );
-        }
 
-        pv_table.moves[0][0].unwrap()
+            best_move = self.pv.moves[0][0];
+        }
+        best_move.unwrap()
     }
 
     pub fn reset_position(&mut self) {

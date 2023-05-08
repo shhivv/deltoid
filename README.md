@@ -9,8 +9,12 @@ A Rust based chess engine.
 
 ***
 
-### Version 1
+### Alpha
 
 - Negamax with alpha-beta pruning.
 - PeSTO evaluation function.
-- Transposition table.
+- PV table.
+
+### Acknowledgment
+
+Credits to the [Honse Engine](https://github.com/EngineProgramming/honse/) for helping me implement some core features.

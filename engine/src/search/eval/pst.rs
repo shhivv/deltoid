@@ -178,11 +178,11 @@ impl PieceSquareTable {
             // piece
             for sq in 0..64 {
                 // square
-                mg_table[p * 2][sq] = MG_VALUE[p] + MG_PST_TABLE[p][sq];
-                eg_table[p * 2][sq] = EG_VALUE[p] + EG_PST_TABLE[p][sq];
+                mg_table[p * 2][sq] = MG_VALUE[p] + MG_PST_TABLE[p][sq ^ 56];
+                eg_table[p * 2][sq] = EG_VALUE[p] + EG_PST_TABLE[p][sq ^ 56];
 
-                mg_table[(p * 2) + 1][sq] = MG_VALUE[p] + MG_PST_TABLE[p][sq ^ 56];
-                eg_table[(p * 2) + 1][sq] = EG_VALUE[p] + EG_PST_TABLE[p][sq ^ 56];
+                mg_table[(p * 2) + 1][sq] = MG_VALUE[p] + MG_PST_TABLE[p][sq];
+                eg_table[(p * 2) + 1][sq] = EG_VALUE[p] + EG_PST_TABLE[p][sq];
             }
         }
 
