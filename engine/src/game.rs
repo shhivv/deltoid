@@ -4,7 +4,7 @@ use crate::search::options::SearchOptions;
 use crate::search::root::root;
 use crate::search::time::{timeman::timeman, Timer};
 use crate::{defs::INFINITY, search::info::SearchInfo};
-use movegen::{get_all_moves, Board, Move};
+use movegen::{Board, Move};
 
 #[derive(Clone)]
 pub struct Game {
@@ -90,11 +90,6 @@ impl Game {
         for mv in moves {
             self.board.play(mv);
         }
-    }
-
-    #[must_use]
-    pub fn get_all_moves(&self) -> Vec<Move> {
-        get_all_moves(&self.board)
     }
 }
 

@@ -7,6 +7,7 @@ use movegen::GameStatus;
 
 use super::eval::end::mated_in;
 use super::info::SearchInfo;
+use super::quiescence::quiescence;
 
 #[must_use]
 pub fn root(
@@ -34,8 +35,12 @@ pub fn root(
     }
 
     // We have exceeded the maximum search requirements.
-    if depth == 0 || ply >= MAX_PLY {
+    if ply >= MAX_PLY {
         return eval(board);
+    }
+
+    if depth == 0 {
+        return quiescence(alpha, beta, board, ply, info, pv);
     }
 
     match board.status() {
