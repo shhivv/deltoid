@@ -1,12 +1,13 @@
 // Reference: https://gist.github.com/DOBRO/2592c6dad754ba67e6dcaec8c90165bf
 
 use engine::Game;
+use std::process::exit;
 
 use crate::{
     commands::{go, position},
     consts::{AUTHOR, NAME},
 };
-use std::io::{self, stdin};
+use std::io::stdin;
 
 pub struct Interface {}
 
@@ -16,7 +17,7 @@ impl Interface {
         Self {}
     }
 
-    pub fn start(&self) -> io::Result<()> {
+    pub fn start(&self) {
         Self::intro();
 
         let mut game = Game::new();
@@ -33,14 +34,12 @@ impl Interface {
             match input.next().unwrap_or("") {
                 "ucinewgame" => game = Game::new(),
                 "isready" => println!("readyok"),
-                "quit" => break,
+                "quit" => exit(0),
                 "position" => position::run(&mut input, &mut game),
                 "go" => go::run(&mut input, &mut game),
                 _ => {}
             }
         }
-
-        Ok(())
     }
 
     fn intro() {

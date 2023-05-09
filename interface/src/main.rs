@@ -6,17 +6,15 @@ pub mod uci;
 
 pub mod commands;
 
-use std::io::{self, stdin};
+use std::io::stdin;
 
-fn main() -> io::Result<()> {
+fn main() {
     let mut input = String::new();
 
-    stdin().read_line(&mut input)?;
+    stdin().read_line(&mut input).unwrap();
 
     match input.as_str().trim() {
-        "uci" => uci::Interface::new().start()?,
+        "uci" => uci::Interface::new().start(),
         _ => println!("Unkown protocol"),
     };
-
-    Ok(())
 }

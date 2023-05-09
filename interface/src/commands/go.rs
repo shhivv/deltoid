@@ -1,11 +1,16 @@
-use engine::{Game, search::info::SearchInfo, pv};
+use engine::{
+    pv,
+    search::{info::SearchInfo, options::SearchOptions},
+    Game,
+};
 use std::str::SplitAsciiWhitespace;
 
-pub fn run(_input: &mut SplitAsciiWhitespace, game: &mut Game) {
-
+pub fn run(input: &mut SplitAsciiWhitespace, game: &mut Game) {
     game.info = SearchInfo::new();
     game.pv = pv::PVTable::new();
-    
-    let mv = game.search();
+
+    let options = SearchOptions::parse(input);
+    let mv = game.search(&options);
+
     println!("bestmove {mv}");
 }
