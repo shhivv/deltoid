@@ -1,12 +1,19 @@
 use movegen::{get_all_captures, Board, GameStatus};
 
-use crate::{pv::PVTable, defs::MAX_PLY};
+use crate::{defs::MAX_PLY, pv::PVTable};
 
-use super::{eval::eval, info::SearchInfo};
 use super::super::defs::DRAW;
 use super::eval::end::mated_in;
+use super::{eval::eval, info::SearchInfo};
 
-pub fn quiescence(mut alpha: i32, beta: i32, board: &Board, ply: u8, info: &mut SearchInfo, pv: &mut PVTable) -> i32 {
+pub fn quiescence(
+    mut alpha: i32,
+    beta: i32,
+    board: &Board,
+    ply: u8,
+    info: &mut SearchInfo,
+    pv: &mut PVTable,
+) -> i32 {
     if info.nodes % 1024 == 0 {
         if let (Some(start), Some(end)) = (info.timer.start, info.timer.stop_time) {
             #[allow(clippy::cast_possible_truncation)]
@@ -16,23 +23,21 @@ pub fn quiescence(mut alpha: i32, beta: i32, board: &Board, ply: u8, info: &mut 
         }
     }
 
-
     info.nodes += 1;
 
-    if info.stop && ply > 0{
+    if info.stop && ply > 0 {
         return 0;
     }
 
-    if ply >= MAX_PLY{
-        if !board.checkers().is_empty(){
-            return 0
+    if ply >= MAX_PLY {
+        if !board.checkers().is_empty() {
+            return 0;
         }
         return eval(board);
     }
 
-
     pv.set_length(ply);
-    
+
     match board.status() {
         GameStatus::Won => return mated_in(ply),
         GameStatus::Drawn => return DRAW,
@@ -55,7 +60,7 @@ pub fn quiescence(mut alpha: i32, beta: i32, board: &Board, ply: u8, info: &mut 
         let mut moved = board.clone();
         moved.play_unchecked(mv);
 
-        let score = -quiescence(-beta, -alpha, board, ply +1, info, pv);
+        let score = -quiescence(-beta, -alpha, board, ply + 1, info, pv);
 
         if score >= beta {
             return beta;
