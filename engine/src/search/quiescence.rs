@@ -23,8 +23,6 @@ pub fn quiescence(
         }
     }
 
-    info.nodes += 1;
-
     if info.stop && ply > 0 {
         return 0;
     }
@@ -60,7 +58,7 @@ pub fn quiescence(
         let mut moved = board.clone();
         moved.play_unchecked(mv);
 
-        let score = -quiescence(-beta, -alpha, board, ply + 1, info, pv);
+        let score = -quiescence(-beta, -alpha, &moved, ply + 1, info, pv);
 
         if score >= beta {
             return beta;
