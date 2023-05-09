@@ -18,7 +18,6 @@ pub fn root(
     pv: &mut PVTable,
     info: &mut SearchInfo,
 ) -> i32 {
-
     if info.nodes % 1024 == 0 {
         if let (Some(start), Some(end)) = (info.timer.start, info.timer.stop_time) {
             #[allow(clippy::cast_possible_truncation)]

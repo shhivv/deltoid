@@ -22,13 +22,11 @@ impl SearchOptions {
         let mut movetime = None;
         let mut infinite = None;
 
-
         loop {
-
-        let (k, v) = (
-            input.next().unwrap_or_default(),
-            input.next().unwrap_or_default(),
-        );
+            let (k, v) = (
+                input.next().unwrap_or_default(),
+                input.next().unwrap_or_default(),
+            );
             match (k, v) {
                 ("wtime", n) => wtime = n.parse::<u32>().ok(),
                 ("btime", n) => btime = n.parse::<u32>().ok(),
