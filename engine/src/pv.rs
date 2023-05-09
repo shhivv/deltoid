@@ -26,13 +26,14 @@ impl PVTable {
         self.moves[ply as usize][ply as usize] = Some(mv);
         let mut next_ply = ply + 1;
 
-        while next_ply < self.length[(ply as usize) + 1] {
-            self.moves[ply as usize][next_ply as usize] =
-                self.moves[(ply as usize) + 1][next_ply as usize];
-            next_ply += 1;
+        if !next_ply == MAX_PLY {
+            while next_ply < self.length[(ply as usize) + 1] {
+                self.moves[ply as usize][next_ply as usize] =
+                    self.moves[(ply as usize) + 1][next_ply as usize];
+                next_ply += 1;
+            }
+            self.length[ply as usize] = self.length[(ply as usize) + 1];
         }
-
-        self.length[ply as usize] = self.length[(ply as usize) + 1];
     }
 
     #[must_use]
