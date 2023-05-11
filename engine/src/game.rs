@@ -3,6 +3,7 @@ use crate::pv::PVTable;
 use crate::search::options::SearchOptions;
 use crate::search::root::root;
 use crate::search::time::{timeman::timeman, Timer};
+use crate::ttable::TranspositionTable;
 use crate::{defs::INFINITY, search::info::SearchInfo};
 use movegen::{Board, Move};
 
@@ -11,6 +12,7 @@ pub struct Game {
     pub board: Board,
     pub info: SearchInfo,
     pub pv: PVTable,
+    pub tt: TranspositionTable,
 }
 
 impl Game {
@@ -20,6 +22,7 @@ impl Game {
             board: Board::startpos(),
             info: SearchInfo::new(),
             pv: PVTable::new(),
+            tt: TranspositionTable::with_size(64),
         }
     }
 
@@ -51,6 +54,7 @@ impl Game {
                 INFINITY,
                 &mut self.pv,
                 &mut self.info,
+                &mut self.tt,
             );
 
             if self.info.stop && iter > 1 {

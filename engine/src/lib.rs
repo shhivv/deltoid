@@ -6,3 +6,4 @@ pub mod search;
 pub use game::Game;
 pub mod defs;
 pub mod pv;
+pub mod ttable;

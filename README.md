@@ -9,12 +9,17 @@ A Rust based chess engine.
 
 ***
 
-### Alpha
+### Versions
+
+**Alpha**
 
 - Negamax with Alpha-Beta pruning.
 - PeSTO evaluation function.
-- PV table.
+- Iterative deepening with PV table.
 - Quiescence search.
+- Transposition table.
+
+***
 
 ### Acknowledgment
 
